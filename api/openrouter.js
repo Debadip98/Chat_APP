@@ -11,14 +11,19 @@ export default async function handler(req, res) {
   }
 
   try {
-    // forward the request body as-is (expect body like { model, messages })
+    const referer = req.headers['referer'] || req.headers['origin'] || '';
+    const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
+
     const response = await fetch('https://api.openrouter.ai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${OPENROUTER_KEY}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        // Optional but recommended by OpenRouter for routing and analytics
+        'HTTP-Referer': referer,
+        'X-Title': 'Chat App Ready'
       },
-      body: JSON.stringify(req.body)
+      body: JSON.stringify(body)
     });
 
     const data = await response.json();

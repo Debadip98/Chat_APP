@@ -23,7 +23,7 @@ export default function App(){
         <AuthButton session={session} />
       </header>
       <main className="main">
-        {session ? <Chat session={session} /> : <div className="landing"><p>Please sign in with Google to start.</p><AuthButton session={session} /></div>}
+        <Chat />
       </main>
       <GoogleMapsButton />
     </div>
