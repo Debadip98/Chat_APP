@@ -1,5 +1,5 @@
 // api/openrouter.js
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
@@ -19,7 +19,6 @@ export default async function handler(req, res) {
       headers: {
         'Authorization': `Bearer ${OPENROUTER_KEY}`,
         'Content-Type': 'application/json',
-        // Optional but recommended by OpenRouter for routing and analytics
         'HTTP-Referer': referer,
         'X-Title': 'Chat App Ready'
       },
